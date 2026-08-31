@@ -1,6 +1,6 @@
 {
   "name": "pstack-codex",
-  "version": "0.14.5+codex.20260831113459",
+  "version": "1.0.0",
   "description": "A complete, safety-scoped Codex port of pstack's 45 rigorous engineering workflows.",
   "author": {
     "name": "Lauren Tan and local Codex adaptation"

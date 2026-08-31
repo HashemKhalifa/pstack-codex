@@ -1,0 +1,25 @@
+{
+  "branches": ["main"],
+  "tagFormat": "v${version}",
+  "plugins": [
+    [
+      "@semantic-release/commit-analyzer",
+      {
+        "preset": "conventionalcommits"
+      }
+    ],
+    [
+      "@semantic-release/release-notes-generator",
+      {
+        "preset": "conventionalcommits"
+      }
+    ],
+    [
+      "@semantic-release/exec",
+      {
+        "verifyReleaseCmd": "python3 plugins/pstack-codex/scripts/validate_release.py --tag v${nextRelease.version}"
+      }
+    ],
+    "@semantic-release/github"
+  ]
+}

@@ -17,13 +17,14 @@ SEMVER = re.compile(
 
 def extract_release_notes(changelog: str, version: str) -> str:
     heading = re.compile(
-        rf"^## \[{re.escape(version)}\](?: - \d{{4}}-\d{{2}}-\d{{2}})?\s*$",
+        rf"^## (?:\[{re.escape(version)}\](?: - \d{{4}}-\d{{2}}-\d{{2}})?|"
+        rf"{re.escape(version)} \(\d{{4}}-\d{{2}}-\d{{2}}\))\s*$",
         re.MULTILINE,
     )
     match = heading.search(changelog)
     if not match:
         return ""
-    next_heading = re.search(r"^## \[", changelog[match.end() :], re.MULTILINE)
+    next_heading = re.search(r"^## ", changelog[match.end() :], re.MULTILINE)
     end = match.end() + next_heading.start() if next_heading else len(changelog)
     return changelog[match.start() : end].strip() + "\n"
 

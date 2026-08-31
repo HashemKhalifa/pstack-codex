@@ -18,7 +18,7 @@ class ValidateReleaseTest(unittest.TestCase):
                 '{"name":"pstack-codex","version":"1.0.0"}\n'
             )
             (root / "CHANGELOG.md").write_text(
-                "# Changelog\n\n## [1.0.0] - 2026-08-31\n\n### Added\n\n- Live agent smoke.\n"
+                "# Changelog\n\n## 1.0.0 (2026-08-31)\n\n### Added\n\n- Live agent smoke.\n"
             )
             self.assertEqual([], validate_release(root, "v1.0.0"))
             self.assertIn(

@@ -1,0 +1,61 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+
+concurrency:
+  group: semantic-release
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24.15.0"
+          cache: npm
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: "1.3.13"
+
+      - run: npm ci
+
+      - name: Run Python validation
+        run: |
+          npm run test:python
+          python3 plugins/pstack-codex/scripts/validate_port.py
+
+      - name: Run bundled pstack tests
+        working-directory: plugins/pstack-codex/skills/poteto-mode/scripts
+        env:
+          GIT_CONFIG_NOSYSTEM: "1"
+          GIT_CONFIG_GLOBAL: /dev/null
+          GIT_AUTHOR_NAME: pstack-release
+          GIT_AUTHOR_EMAIL: pstack-release@invalid
+          GIT_COMMITTER_NAME: pstack-release
+          GIT_COMMITTER_EMAIL: pstack-release@invalid
+        run: |
+          bun install --frozen-lockfile
+          bun test orch watch-pr
+
+      - name: Publish semantic release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npm run release

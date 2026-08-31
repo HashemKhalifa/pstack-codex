@@ -1,5 +1,9 @@
 # pstack-codex
 
+[![CI](https://github.com/HashemKhalifa/pstack-codex/actions/workflows/ci.yml/badge.svg)](https://github.com/HashemKhalifa/pstack-codex/actions/workflows/ci.yml)
+[![GitHub release](https://img.shields.io/github/v/release/HashemKhalifa/pstack-codex)](https://github.com/HashemKhalifa/pstack-codex/releases)
+[![semantic-release](https://img.shields.io/badge/semantic--release-conventionalcommits-e10079?logo=semantic-release)](https://github.com/semantic-release/semantic-release)
+
 A complete Codex port of Cursor's verified pstack marketplace package, plus a
 Codex-safe fork of `poteto/noodle`'s adversarial-review skill.
 
@@ -66,6 +70,20 @@ The structural validator fails closed unless all 45 pstack skills, all five
 agents, required upstream resources, Codex frontmatter, port-contract
 references, and validation evidence are present. The smoke command is the live
 terminal gate: every named agent must be discovered and successfully spawned.
+
+## Releases and changelog
+
+[`semantic-release`](https://github.com/semantic-release/semantic-release)
+analyzes Conventional Commits merged to `main`, selects the next SemVer version,
+updates [`CHANGELOG.md`](CHANGELOG.md), synchronizes the plugin manifest, tags
+the release, and publishes the GitHub Release. See
+[`RELEASING.md`](RELEASING.md) for the PR-only release workflow.
+
+## Contributors
+
+Upstream authors and Codex-port maintainers are recorded in
+[`CONTRIBUTORS.md`](CONTRIBUTORS.md). The list is derived from the public Git
+history of the exact imported paths.
 
 ## Safety and portability
 

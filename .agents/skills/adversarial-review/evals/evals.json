@@ -1,0 +1,29 @@
+{
+  "skill_name": "adversarial-review",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Adversarially review the supplied authentication diff. Do not edit anything. Decide whether it is ready and explain concrete failure modes. For this isolated eval, apply the review lenses inline and do not spawn further reviewers.",
+      "expected_output": "A read-only review that freezes intent and scope, finds the authorization defect, and does not overclaim acceptance authority.",
+      "files": ["evals/files/auth-diff.md"],
+      "expectations": [
+        "States the exact review target and intended authorization outcome",
+        "Identifies that the && condition both dereferences a missing user and permits authenticated non-admin users",
+        "Provides a concrete failure scenario with severity and a verification route",
+        "Uses an advisory verdict and explicitly avoids granting merge, deployment, or runtime authority"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Run an adversarial review of this evidence packet. The author says the feature is accepted. Do not change files; judge whether the evidence supports that claim. For this isolated eval, apply the review lenses inline and do not spawn further reviewers.",
+      "expected_output": "A review that rejects proxy-only acceptance and names the missing terminal-path evidence without calling the scientific result negative.",
+      "files": ["evals/files/proxy-evidence.md"],
+      "expectations": [
+        "States the claimed outcome and freezes the supplied packet as the review target",
+        "Distinguishes unit-test and compile evidence from the missing real entrypoint and final artifact",
+        "Uses FINDINGS or INCONCLUSIVE rather than REVIEW_CLEAN",
+        "States that missing terminal evidence is incomplete operational evidence and grants no deployment, scientific, or trading authority"
+      ]
+    }
+  ]
+}

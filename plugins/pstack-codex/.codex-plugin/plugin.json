@@ -1,0 +1,35 @@
+{
+  "name": "pstack-codex",
+  "version": "0.14.5+codex.20260831101346",
+  "description": "A complete, safety-scoped Codex port of pstack's 45 rigorous engineering workflows.",
+  "author": {
+    "name": "Lauren Tan and local Codex adaptation"
+  },
+  "homepage": "https://github.com/cursor/plugins/tree/main/pstack",
+  "repository": "https://github.com/cursor/plugins",
+  "license": "MIT",
+  "keywords": [
+    "pstack",
+    "codex",
+    "review",
+    "tdd",
+    "architecture"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "pstack Codex",
+    "shortDescription": "Rigorous, evidence-first Codex workflows.",
+    "longDescription": "A complete Codex port of pstack's 45 skills and two subagents. Cursor-specific mechanics are translated through an explicit Codex safety and capability contract.",
+    "developerName": "Lauren Tan and local Codex adaptation",
+    "category": "Developer Tools",
+    "capabilities": [
+      "Read",
+      "Write"
+    ],
+    "defaultPrompt": [
+      "Use poteto-mode to investigate this bug rigorously.",
+      "Run a pstack adversarial review of this diff.",
+      "Use pstack TDD for this regression."
+    ]
+  }
+}

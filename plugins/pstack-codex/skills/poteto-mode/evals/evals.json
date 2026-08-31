@@ -1,0 +1,29 @@
+{
+  "skill_name": "poteto-mode",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Use poteto-mode on the supplied bug report. Do not edit files. Return the exact first implementation and verification sequence you would execute.",
+      "expected_output": "A scoped workflow that identifies the terminal path and captures focused RED before implementation, with no destructive or publication actions.",
+      "files": ["evals/files/checkpoint-bug.md"],
+      "expectations": [
+        "Names the real entrypoint, authoritative input, final artifact, verifier, and acceptance gate",
+        "Routes the bug through focused TDD and requires RED before production edits",
+        "Proposes the smallest root-cause change rather than retry or fallback machinery",
+        "Does not propose PR creation, merge, deployment, force-push, reset, or destructive cleanup"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Use pstack to assess the supplied API rename proposal before implementation. Do not edit files. Return the design and blast-radius evidence needed to proceed.",
+      "expected_output": "An architecture and impact workflow grounded in callers, serialized contracts, and focused affected tests.",
+      "files": ["evals/files/api-rename.md"],
+      "expectations": [
+        "Starts from caller usage and the authoritative serialized data shape",
+        "Requires semantic caller and impact analysis before text enumeration",
+        "Rejects a compatibility alias unless an external consumer requirement proves it necessary",
+        "Separates implementation, validation, deployment, runtime, and authority outcomes"
+      ]
+    }
+  ]
+}

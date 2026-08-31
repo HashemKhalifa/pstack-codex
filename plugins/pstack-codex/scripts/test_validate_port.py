@@ -10,6 +10,7 @@ from validate_port import (
     EXPECTED_EVIDENCE,
     EXPECTED_SKILLS,
     EXPECTED_UPSTREAM_RESOURCES,
+    validate_agent_smoke,
     validate_port,
 )
 
@@ -30,7 +31,13 @@ class ValidatePortTest(unittest.TestCase):
             },
             EXPECTED_AGENTS,
         )
-        self.assertEqual({"validation/2026-08-31-pstack-script-tests.md"}, EXPECTED_EVIDENCE)
+        self.assertEqual(
+            {
+                "validation/2026-08-31-agent-smoke.json",
+                "validation/2026-08-31-pstack-script-tests.md",
+            },
+            EXPECTED_EVIDENCE,
+        )
         self.assertEqual(11, len(EXPECTED_UPSTREAM_RESOURCES))
         self.assertEqual([], validate_port(plugin_root, repo_root))
 
@@ -49,6 +56,20 @@ class ValidatePortTest(unittest.TestCase):
             .read_text()
             .lower(),
         )
+
+    def test_agent_smoke_receipt_requires_every_successful_agent(self) -> None:
+        valid = {
+            "schema": "pstack-codex-agent-smoke-v1",
+            "codex_version": "codex-cli 0.151.0",
+            "commit": "a" * 40,
+            "agents": [
+                {"agent": name, "success": True} for name in sorted(EXPECTED_AGENTS)
+            ],
+            "passed": True,
+        }
+        self.assertEqual([], validate_agent_smoke(valid))
+        valid["agents"][0]["success"] = False
+        self.assertIn("agent smoke did not pass all agents", validate_agent_smoke(valid))
 
 
 if __name__ == "__main__":

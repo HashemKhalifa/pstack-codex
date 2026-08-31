@@ -64,7 +64,10 @@ EXPECTED_AGENTS = {
     "pstack_minimalist",
     "pstack_skeptic",
 }
-EXPECTED_EVIDENCE = {"validation/2026-08-31-pstack-script-tests.md"}
+EXPECTED_EVIDENCE = {
+    "validation/2026-08-31-agent-smoke.json",
+    "validation/2026-08-31-pstack-script-tests.md",
+}
 EXPECTED_UPSTREAM_RESOURCES = {
     "skills/architect/references/design-red-flags.md",
     "skills/architect/references/rationale-template.md",
@@ -100,6 +103,31 @@ def _frontmatter(skill_path: Path) -> tuple[dict[str, str], set[str], str]:
         keys.add(key)
         values[key] = line.split(":", 1)[1].strip().strip("'\"")
     return values, keys, text[end + 5 :]
+
+
+def validate_agent_smoke(receipt: dict[str, object]) -> list[str]:
+    errors: list[str] = []
+    if receipt.get("schema") != "pstack-codex-agent-smoke-v1":
+        errors.append("agent smoke schema mismatch")
+    if not str(receipt.get("codex_version", "")).startswith("codex-cli "):
+        errors.append("agent smoke missing Codex version")
+    if not re.fullmatch(r"[0-9a-f]{40}", str(receipt.get("commit", ""))):
+        errors.append("agent smoke missing exact commit")
+
+    agents = receipt.get("agents")
+    if not isinstance(agents, list):
+        errors.append("agent smoke agents must be a list")
+        return errors
+    results = {
+        str(item.get("agent")): bool(item.get("success"))
+        for item in agents
+        if isinstance(item, dict)
+    }
+    if set(results) != EXPECTED_AGENTS or not all(results.values()) or not receipt.get(
+        "passed"
+    ):
+        errors.append("agent smoke did not pass all agents")
+    return errors
 
 
 def validate_port(plugin_root: Path, repo_root: Path) -> list[str]:
@@ -152,6 +180,15 @@ def validate_port(plugin_root: Path, repo_root: Path) -> list[str]:
     )
     if missing_evidence:
         errors.append(f"missing validation evidence: {missing_evidence}")
+
+    smoke_path = plugin_root / "validation" / "2026-08-31-agent-smoke.json"
+    if smoke_path.is_file():
+        try:
+            smoke_receipt = json.loads(smoke_path.read_text())
+        except (OSError, json.JSONDecodeError) as error:
+            errors.append(f"invalid agent smoke receipt: {error}")
+        else:
+            errors.extend(validate_agent_smoke(smoke_receipt))
 
     manifest_path = plugin_root / ".codex-plugin" / "plugin.json"
     try:

@@ -74,9 +74,9 @@ terminal gate: every named agent must be discovered and successfully spawned.
 ## Releases and changelog
 
 [`semantic-release`](https://github.com/semantic-release/semantic-release)
-analyzes Conventional Commits merged to `main`, selects the next SemVer version,
-updates [`CHANGELOG.md`](CHANGELOG.md), synchronizes the plugin manifest, tags
-the release, and publishes the GitHub Release. See
+analyzes Conventional Commits merged to `main`, selects and verifies the next
+SemVer version recorded by the release PR, tags the release, and publishes the
+GitHub Release. See [`CHANGELOG.md`](CHANGELOG.md) for the release history and
 [`RELEASING.md`](RELEASING.md) for the PR-only release workflow.
 
 ## Contributors

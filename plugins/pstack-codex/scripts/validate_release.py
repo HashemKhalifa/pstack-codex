@@ -16,9 +16,14 @@ SEMVER = re.compile(
 
 
 def extract_release_notes(changelog: str, version: str) -> str:
+    date = r"\d{4}-\d{2}-\d{2}"
+    bracketed_version = (
+        rf"\[{re.escape(version)}\]"
+        rf"(?:\([^)]+\))?"
+        rf"(?: (?:- {date}|\({date}\)))?"
+    )
     heading = re.compile(
-        rf"^## (?:\[{re.escape(version)}\](?: - \d{{4}}-\d{{2}}-\d{{2}})?|"
-        rf"{re.escape(version)} \(\d{{4}}-\d{{2}}-\d{{2}}\))\s*$",
+        rf"^## (?:{bracketed_version}|{re.escape(version)} \({date}\))\s*$",
         re.MULTILINE,
     )
     match = heading.search(changelog)

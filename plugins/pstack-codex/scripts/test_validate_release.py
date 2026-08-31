@@ -42,6 +42,22 @@ class ValidateReleaseTest(unittest.TestCase):
             self.assertIn('"version": "1.2.3"', contents)
             self.assertIn('"skills": "./skills/"', contents)
 
+    def test_extract_release_notes_accepts_linked_version_heading(self) -> None:
+        changelog = (
+            "# Changelog\n\n"
+            "## [1.1.0](https://github.com/HashemKhalifa/pstack-codex/compare/"
+            "v1.0.0...v1.1.0) (2026-09-01)\n\n"
+            "### Bug Fixes\n\n"
+            "- Accept semantic-release compare links.\n\n"
+            "## 1.0.0 (2026-08-31)\n"
+        )
+
+        notes = extract_release_notes(changelog, "1.1.0")
+
+        self.assertIn("## [1.1.0]", notes)
+        self.assertIn("### Bug Fixes", notes)
+        self.assertNotIn("## 1.0.0", notes)
+
     def test_mismatch_fails_closed(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             root = Path(temp_dir)

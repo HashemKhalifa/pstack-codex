@@ -22,9 +22,22 @@ Start a new Codex task after installation so the skill catalog reloads.
 
 ## Use the custom agents
 
-Codex custom agents are project-scoped. Clone this repository and launch Codex
-from it to use the bundled `.codex/agents/*.toml` definitions, or copy those
-files into another repository's `.codex/agents/` directory.
+Codex custom agents are project-scoped and project `.codex/` layers load only
+after the exact project is trusted. Clone this repository, mark its exact path
+trusted when Codex prompts, and start a fresh task from the clone.
+
+For manual configuration, add the destination's absolute path to
+`~/.codex/config.toml`:
+
+```toml
+[projects."/absolute/path/to/project"]
+trust_level = "trusted"
+```
+
+To use the agents in another repository, install the plugin, copy
+`.codex/agents/*.toml` into that repository, trust the destination's exact
+path, and start a fresh Codex task. The agent definitions are self-contained;
+the plugin supplies the associated pstack skills.
 
 The upstream roles are:
 
@@ -45,12 +58,14 @@ launched from this repository. Copy the directory into another repository's
 
 ```sh
 python3 plugins/pstack-codex/scripts/validate_port.py
-python3 -m unittest plugins/pstack-codex/scripts/test_validate_port.py
+python3 -m unittest discover -s plugins/pstack-codex/scripts -p 'test_*.py'
+python3 plugins/pstack-codex/scripts/smoke_agents.py
 ```
 
-The validator fails closed unless all 45 pstack skills, both upstream agents,
-required upstream resources, Codex frontmatter, port-contract references, and
-validation evidence are present.
+The structural validator fails closed unless all 45 pstack skills, all five
+agents, required upstream resources, Codex frontmatter, port-contract
+references, and validation evidence are present. The smoke command is the live
+terminal gate: every named agent must be discovered and successfully spawned.
 
 ## Safety and portability
 

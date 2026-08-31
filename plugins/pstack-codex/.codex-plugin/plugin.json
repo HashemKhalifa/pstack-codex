@@ -1,12 +1,12 @@
 {
   "name": "pstack-codex",
-  "version": "0.14.5+codex.20260831101346",
+  "version": "0.14.5+codex.20260831113459",
   "description": "A complete, safety-scoped Codex port of pstack's 45 rigorous engineering workflows.",
   "author": {
     "name": "Lauren Tan and local Codex adaptation"
   },
-  "homepage": "https://github.com/cursor/plugins/tree/main/pstack",
-  "repository": "https://github.com/cursor/plugins",
+  "homepage": "https://github.com/HashemKhalifa/pstack-codex",
+  "repository": "https://github.com/HashemKhalifa/pstack-codex",
   "license": "MIT",
   "keywords": [
     "pstack",
@@ -19,7 +19,7 @@
   "interface": {
     "displayName": "pstack Codex",
     "shortDescription": "Rigorous, evidence-first Codex workflows.",
-    "longDescription": "A complete Codex port of pstack's 45 skills and two subagents. Cursor-specific mechanics are translated through an explicit Codex safety and capability contract.",
+    "longDescription": "A complete Codex port of pstack's 45 skills, two upstream agents, and three read-only review agents. Cursor-specific mechanics are translated through an explicit Codex safety and capability contract.",
     "developerName": "Lauren Tan and local Codex adaptation",
     "category": "Developer Tools",
     "capabilities": [

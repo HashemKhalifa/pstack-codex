@@ -57,7 +57,13 @@ EXPECTED_SKILLS = {
     "why",
 }
 
-EXPECTED_AGENTS = {"comment-sicko", "poteto-agent"}
+EXPECTED_AGENTS = {
+    "comment-sicko",
+    "poteto-agent",
+    "pstack_architect",
+    "pstack_minimalist",
+    "pstack_skeptic",
+}
 EXPECTED_EVIDENCE = {"validation/2026-08-31-pstack-script-tests.md"}
 EXPECTED_UPSTREAM_RESOURCES = {
     "skills/architect/references/design-red-flags.md",
@@ -171,10 +177,12 @@ def validate_port(plugin_root: Path, repo_root: Path) -> list[str]:
         for required in ("name", "description", "developer_instructions"):
             if not agent.get(required):
                 errors.append(f"{agent_path.name}: missing {required}")
+        if "plugins/pstack-codex/" in str(agent.get("developer_instructions", "")):
+            errors.append(f"{agent_path.name}: developer instructions are not self-contained")
 
     missing_agents = sorted(EXPECTED_AGENTS - actual_agents)
     if missing_agents:
-        errors.append(f"missing upstream Codex agents: {missing_agents}")
+        errors.append(f"missing Codex agents: {missing_agents}")
 
     return errors
 
@@ -187,7 +195,7 @@ def main() -> int:
         for error in errors:
             print(error)
         return 1
-    print(f"pstack Codex port valid: {len(EXPECTED_SKILLS)} skills, {len(EXPECTED_AGENTS)} upstream agents")
+    print(f"pstack Codex port valid: {len(EXPECTED_SKILLS)} skills, {len(EXPECTED_AGENTS)} agents")
     return 0
 
 

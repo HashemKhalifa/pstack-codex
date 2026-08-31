@@ -12,18 +12,25 @@ slugs.
 
 ## Workflow
 
-1. Inspect `.codex/agents/` and `.codex/config.toml` in the active repository,
+1. Confirm the active repository's exact absolute path is trusted. Codex skips
+   project `.codex/` layers, including custom agents, for untrusted projects.
+   If it is not trusted, stop and ask the user to trust it through Codex or add
+   the exact path under `[projects]` with `trust_level = "trusted"` in the user
+   config.
+2. Inspect `.codex/agents/` and `.codex/config.toml` in the active repository,
    plus the user's Codex config only when personal configuration is requested.
-2. Enumerate models and reasoning levels currently exposed by Codex. Treat that
+3. Enumerate models and reasoning levels currently exposed by Codex. Treat that
    live list as authoritative.
-3. Show the two upstream roles (`poteto-agent`, `comment-sicko`) and any local
-   reviewer roles with their current model, effort, and sandbox values.
-4. Default to inheriting the parent model and effort. Add explicit values only
+4. Show all five roles (`poteto-agent`, `comment-sicko`, `pstack_skeptic`,
+   `pstack_architect`, and `pstack_minimalist`) with their current model,
+   effort, and sandbox values.
+5. Default to inheriting the parent model and effort. Add explicit values only
    when the user requests a stable role mapping and the combination is supported.
-5. Keep reviewers read-only. Do not weaken the parent permission or approval
+6. Keep reviewers read-only. Do not weaken the parent permission or approval
    boundary in a custom agent file.
-6. Validate every TOML file and report whether a new Codex task is required to
-   load the changes.
+7. Validate every TOML file, start a fresh task, and run
+   `plugins/pstack-codex/scripts/smoke_agents.py`. Do not call setup complete
+   until all five named agents spawn successfully.
 
 For global defaults, use supported `[agents]` keys in Codex config. For
 role-specific behavior, use standalone `.codex/agents/<agent>.toml`. Do not

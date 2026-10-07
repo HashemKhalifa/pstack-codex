@@ -7,13 +7,12 @@ description: Apply when introducing a new internal API while old callers still e
 
 > Codex port: Read [../../CODEX_PORT.md](../../CODEX_PORT.md) before following this workflow. The port contract overrides host-specific mechanics in this file.
 
-
 # Migrate Callers Then Delete Legacy APIs
 
 When we decide a new API is the right design, migrate callers and remove the old API in the same refactor wave instead of preserving compatibility layers.
 
 **Rule:**
-- Do not keep legacy API paths alive only because internal callers still exist
+- Do not keep legacy API paths only because internal callers still exist
 - Inventory callers, migrate them, and delete the old API immediately
 - Treat temporary adapters as exceptional and time-boxed, not default architecture
 - Update tests to assert the new contract, and delete tests that only protect pre-refactor implementation details

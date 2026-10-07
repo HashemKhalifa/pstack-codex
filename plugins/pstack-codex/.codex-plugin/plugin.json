@@ -1,7 +1,7 @@
 {
   "name": "pstack-codex",
-  "version": "1.0.0",
-  "description": "A complete, safety-scoped Codex port of pstack's 45 rigorous engineering workflows.",
+  "version": "1.1.0",
+  "description": "A complete, safety-scoped Codex port of pstack's 53 rigorous engineering workflows.",
   "author": {
     "name": "Lauren Tan and local Codex adaptation"
   },
@@ -19,7 +19,7 @@
   "interface": {
     "displayName": "pstack Codex",
     "shortDescription": "Rigorous, evidence-first Codex workflows.",
-    "longDescription": "A complete Codex port of pstack's 45 skills, two upstream agents, and three read-only review agents. Cursor-specific mechanics are translated through an explicit Codex safety and capability contract.",
+    "longDescription": "A complete Codex port of pstack's 53 skills, two upstream agents, and three read-only review agents. Cursor-specific mechanics are translated through an explicit Codex safety and capability contract.",
     "developerName": "Lauren Tan and local Codex adaptation",
     "category": "Developer Tools",
     "capabilities": [

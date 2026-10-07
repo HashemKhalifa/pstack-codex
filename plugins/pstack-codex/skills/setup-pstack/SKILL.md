@@ -38,3 +38,19 @@ create `.cursor/rules`, use Cursor model IDs, or silently substitute models.
 
 Optionally offer `create-verification-skill` when the project lacks a real
 surface-level verification harness.
+
+## Optional reasoning budget
+
+When the user asks for a budget, offer unlimited, large, medium, and small.
+Map explicit efforts to the live supported levels, using caps of xhigh, high,
+and medium for the latter three. Unlimited removes the budget cap; it does not
+invent a max level that the selected model lacks. Never change an inherited
+model or effort to implement a budget.
+
+Before applying a cap, retain the uncapped user-selected values in a project
+pstack configuration note. On a rerun, rebuild from those values, preserve
+deliberate role overrides, and show the proposed changes. Do not cap a previously
+capped value again or infer a user's original preference from it. An unlimited
+rerun restores supported uncapped values. Validate every explicit model/effort
+combination against the live host metadata before writing supported TOML keys.
+Do not write a Cursor rule or a second role-mapping system.

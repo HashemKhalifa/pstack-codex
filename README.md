@@ -9,7 +9,7 @@ Codex-safe fork of `poteto/noodle`'s adversarial-review skill.
 
 This repository contains:
 
-- all 45 pstack skills and their bundled resources;
+- all 53 pstack skills and their bundled resources;
 - the two upstream pstack subagents, converted to Codex custom-agent TOML;
 - three additional read-only adversarial reviewer agents;
 - the standalone `adversarial-review` skill;
@@ -66,7 +66,7 @@ python3 -m unittest discover -s plugins/pstack-codex/scripts -p 'test_*.py'
 python3 plugins/pstack-codex/scripts/smoke_agents.py
 ```
 
-The structural validator fails closed unless all 45 pstack skills, all five
+The structural validator fails closed unless all 53 pstack skills, all five
 agents, required upstream resources, Codex frontmatter, port-contract
 references, and validation evidence are present. The smoke command is the live
 terminal gate: every named agent must be discovered and successfully spawned.
@@ -96,9 +96,14 @@ order, or trading authority.
 ## Provenance
 
 - pstack source: `cursor/plugins` commit
-  `fd878692de15a3069c21c8f429eb0b9f2fe178fa`, version `0.14.5`.
+  `12d587dfb20741cafc376c42c696c5f6e2a64487`, version `0.15.5`.
 - adversarial-review source: `poteto/noodle` commit
   `82d2921c52370f23f29086de81ccfb600939c037`.
 - upstream licensing: MIT. See [`LICENSE`](LICENSE).
 
 This is an independent port, not an official Cursor or OpenAI repository.
+
+## Source sync
+
+See [SYNC.md](SYNC.md) for the bounded upstream delta, selected ScriptedAlchemy
+additions, preserved Codex boundaries, and validation commands.

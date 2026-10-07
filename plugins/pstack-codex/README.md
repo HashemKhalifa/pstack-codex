@@ -1,12 +1,12 @@
 # pstack-codex
 
 A project-scoped Codex port of Cursor's complete pstack plugin, sourced from
-`cursor/plugins` commit `fd878692de15a3069c21c8f429eb0b9f2fe178fa`
-(upstream pstack version `0.14.5`).
+`cursor/plugins` commit `12d587dfb20741cafc376c42c696c5f6e2a64487`
+(upstream pstack version `0.15.5`).
 
 Included inventory:
 
-- all 45 marketplace skills and their bundled references, playbooks, scripts,
+- all 53 marketplace skills and their bundled references, playbooks, scripts,
   and assets;
 - both upstream subagent roles, converted to Codex custom-agent TOML;
 - three additional read-only adversarial reviewer agents used by the

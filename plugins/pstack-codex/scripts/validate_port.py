@@ -10,6 +10,14 @@ import tomllib
 
 
 EXPECTED_SKILLS = {
+    "poteto-help",
+    "principle-explain-the-number",
+    "correct",
+    "benchmark-checklist",
+    "automate-team",
+    "automate-maintainer",
+    "principle-test-behavior-not-implementation",
+    "principle-attack-the-premise",
     "architect",
     "arena",
     "automate-me",
@@ -72,8 +80,6 @@ EXPECTED_UPSTREAM_RESOURCES = {
     "skills/architect/references/design-red-flags.md",
     "skills/architect/references/rationale-template.md",
     "skills/architect/references/runner-prompt.md",
-    "skills/how/references/critic-prompt.md",
-    "skills/how/references/critique-rubric.md",
     "skills/how/references/explainer-prompt.md",
     "skills/how/references/explorer-prompt.md",
     "skills/interrogate/references/code-quality-review.md",

@@ -7,7 +7,6 @@ description: Apply during planned rewrites and migrations with explicit phase bo
 
 > Codex port: Read [../../CODEX_PORT.md](../../CODEX_PORT.md) before following this workflow. The port contract overrides host-specific mechanics in this file.
 
-
 # Outcome-Oriented Execution
 
 Optimize for the intended, verifiable end state rather than preserving smooth intermediate states.
@@ -17,7 +16,6 @@ Optimize for the intended, verifiable end state rather than preserving smooth in
 **Core rule:**
 - Prioritize end-state integrity over transitional stability
 - Intermediate breakage is acceptable when it is planned, scoped, and reversible
-- Always run final verification before declaring done
 
 **Guardrails:**
 - Use this for planned rewrites and migrations with explicit phase boundaries

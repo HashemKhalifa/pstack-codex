@@ -17,7 +17,9 @@ description: Tighten technical prose, review comments, documentation, commit tex
 3. Lead with the outcome. Use short declarative sentences and concrete nouns.
 4. Remove throat-clearing, repetition, fake quotations, vague praise,
    self-reference, and inflated claims.
-5. Keep structure only where it makes the result easier to scan.
-6. Recheck that concision did not turn incomplete evidence into certainty.
+5. Replace metaphor and rhetorical flourish with literal behavior. Keep articles
+   and verbs; do not compress prose into fragments the reader must decode.
+6. Keep structure only where it makes the result easier to scan.
+7. Recheck that concision did not turn incomplete evidence into certainty.
 
 Return only the revised prose unless the user asks for commentary.

@@ -20,7 +20,7 @@ class ValidatePortTest(unittest.TestCase):
         plugin_root = Path(__file__).resolve().parents[1]
         repo_root = plugin_root.parents[1]
 
-        self.assertEqual(45, len(EXPECTED_SKILLS))
+        self.assertEqual(53, len(EXPECTED_SKILLS))
         self.assertEqual(
             {
                 "comment-sicko",
@@ -38,7 +38,7 @@ class ValidatePortTest(unittest.TestCase):
             },
             EXPECTED_EVIDENCE,
         )
-        self.assertEqual(11, len(EXPECTED_UPSTREAM_RESOURCES))
+        self.assertEqual(9, len(EXPECTED_UPSTREAM_RESOURCES))
         self.assertEqual([], validate_port(plugin_root, repo_root))
 
     def test_copyable_agents_are_self_contained(self) -> None:

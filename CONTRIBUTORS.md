@@ -16,3 +16,5 @@
 Contributor identities are derived from the public Git history of the exact
 upstream source paths and this repository. Upstream work remains under the MIT
 license recorded in [`LICENSE`](LICENSE).
+
+Selected Codex workflows and helper-test adaptations from [ScriptedAlchemy/pstack-codex](https://github.com/ScriptedAlchemy/pstack-codex) at `c25afa251f1513b0b28cc089294d468c5e350444`, distributed under MIT.

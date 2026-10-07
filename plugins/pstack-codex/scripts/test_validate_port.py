@@ -85,6 +85,14 @@ class ValidatePortTest(unittest.TestCase):
             .lower(),
         )
 
+    def test_no_comments_uses_the_registered_codex_agent(self) -> None:
+        plugin_root = Path(__file__).resolve().parents[1]
+        skill = (plugin_root / "skills" / "no-comments" / "SKILL.md").read_text()
+
+        self.assertIn("`comment-sicko`", skill)
+        self.assertNotIn("Spawn `Task`", skill)
+        self.assertNotIn("subagent_type", skill)
+
     def test_agent_smoke_receipt_requires_every_successful_agent(self) -> None:
         valid = {
             "schema": "pstack-codex-agent-smoke-v1",

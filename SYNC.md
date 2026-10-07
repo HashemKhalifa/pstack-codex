@@ -12,7 +12,7 @@ The baseline is Cursor pstack 0.15.5 at `12d587dfb20741cafc376c42c696c5f6e2a6448
 | skills/poteto-mode/playbooks/{multi-phase-plan,performance}.md and scripts/check-plan.mjs | Live evidence and fair trunk/head measurement; concrete perf budgets when trunk lacks the feature; plan checks accept inherited or configured worker models. | check-plan.test.mjs populates the actual shipped skeleton and rejects missing gates, evidence, placeholders, and cadence. |
 | skills/principle-{attack-the-premise,test-behavior-not-implementation}/SKILL.md | Challenge a repeatedly failed premise; test observable behavior. | Structural skill discovery and native scenario evaluation. |
 | skills/architect/references/*, skills/why/*, skills/blast-radius/SKILL.md, skills/technical-writing/SKILL.md | Schema-first design, decision lineage, downstream impact, and concise evidence-aware explanations. | Structural resource validation and relative-link review. |
-| skills/how/references/{critic-prompt,critique-rubric}.md | Remove obsolete critique resources and validator expectations. The native How entrypoint already avoids critique. | Structural validator expects nine bundled playbook resources. |
+| skills/how/references/{critic-prompt,critique-rubric}.md | Remove obsolete critique resources and validator expectations. The native How entrypoint already avoids critique. | Structural validator expects nine required upstream resources. |
 
 ## Selected ScriptedAlchemy additions
 

@@ -75,6 +75,8 @@ EXPECTED_AGENTS = {
 EXPECTED_EVIDENCE = {
     "validation/2026-08-31-agent-smoke.json",
     "validation/2026-08-31-pstack-script-tests.md",
+    "validation/2026-10-07-agent-smoke.json",
+    "validation/2026-10-07-sync-validation.md",
 }
 EXPECTED_UPSTREAM_RESOURCES = {
     "skills/architect/references/design-red-flags.md",
@@ -187,8 +189,7 @@ def validate_port(plugin_root: Path, repo_root: Path) -> list[str]:
     if missing_evidence:
         errors.append(f"missing validation evidence: {missing_evidence}")
 
-    smoke_path = plugin_root / "validation" / "2026-08-31-agent-smoke.json"
-    if smoke_path.is_file():
+    for smoke_path in sorted((plugin_root / "validation").glob("*agent-smoke.json")):
         try:
             smoke_receipt = json.loads(smoke_path.read_text())
         except (OSError, json.JSONDecodeError) as error:

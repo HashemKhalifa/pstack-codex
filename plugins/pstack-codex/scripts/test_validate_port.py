@@ -35,6 +35,8 @@ class ValidatePortTest(unittest.TestCase):
             {
                 "validation/2026-08-31-agent-smoke.json",
                 "validation/2026-08-31-pstack-script-tests.md",
+                "validation/2026-10-07-agent-smoke.json",
+                "validation/2026-10-07-sync-validation.md",
             },
             EXPECTED_EVIDENCE,
         )

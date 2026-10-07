@@ -36,6 +36,10 @@ playbook or sibling skill.
 - Change-impact or test-selection question: use `blast-radius`.
 - Diff, plan, or artifact challenge: use `interrogate` or the
   `adversarial-review` skill.
+- Performance claims: use `benchmark-checklist` and `principle-explain-the-number`.
+- Recurring agent mistakes: use `correct` and `principle-attack-the-premise`.
+- Maintainer or team conventions: use `automate-maintainer` or `automate-team`.
+- Help choosing a workflow: use `poteto-help`.
 - Final prose cleanup: use `unslop` after preserving every material
   fact and caveat.
 
@@ -64,6 +68,7 @@ writes must be translated or stopped per `CODEX_PORT.md`.
 - Reproduce symptoms and fix the owning root cause.
 - Sequence work into small units with executable evidence.
 - Prove the real path, not a proxy, before reporting completion.
+- Apply `principle-test-behavior-not-implementation` to tests and `principle-attack-the-premise` after repeated failed fixes.
 - Keep implementation, validation, deployment, runtime activation, outcome
   evidence, and operational authority separate.
 
@@ -75,6 +80,9 @@ Use read-only reviewers for challenge lanes. The lead verifies artifacts and
 does not pass through a subagent's self-report as evidence.
 
 ## Finish
+
+State each material claim with its evidence or uncertainty in the same sentence.
+A prediction or unseen cause stays labeled as a guess.
 
 Report the outcome first, then:
 

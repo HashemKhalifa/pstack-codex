@@ -10,6 +10,14 @@ import tomllib
 
 
 EXPECTED_SKILLS = {
+    "poteto-help",
+    "principle-explain-the-number",
+    "correct",
+    "benchmark-checklist",
+    "automate-team",
+    "automate-maintainer",
+    "principle-test-behavior-not-implementation",
+    "principle-attack-the-premise",
     "architect",
     "arena",
     "automate-me",
@@ -64,16 +72,18 @@ EXPECTED_AGENTS = {
     "pstack_minimalist",
     "pstack_skeptic",
 }
+CURRENT_AGENT_SMOKE = "validation/2026-10-07-agent-smoke.json"
+
 EXPECTED_EVIDENCE = {
     "validation/2026-08-31-agent-smoke.json",
     "validation/2026-08-31-pstack-script-tests.md",
+    CURRENT_AGENT_SMOKE,
+    "validation/2026-10-07-sync-validation.md",
 }
 EXPECTED_UPSTREAM_RESOURCES = {
     "skills/architect/references/design-red-flags.md",
     "skills/architect/references/rationale-template.md",
     "skills/architect/references/runner-prompt.md",
-    "skills/how/references/critic-prompt.md",
-    "skills/how/references/critique-rubric.md",
     "skills/how/references/explainer-prompt.md",
     "skills/how/references/explorer-prompt.md",
     "skills/interrogate/references/code-quality-review.md",
@@ -181,7 +191,9 @@ def validate_port(plugin_root: Path, repo_root: Path) -> list[str]:
     if missing_evidence:
         errors.append(f"missing validation evidence: {missing_evidence}")
 
-    smoke_path = plugin_root / "validation" / "2026-08-31-agent-smoke.json"
+    # Historical evidence is immutable and may describe a retired roster.
+    # Only the current required receipt is checked against EXPECTED_AGENTS.
+    smoke_path = plugin_root / CURRENT_AGENT_SMOKE
     if smoke_path.is_file():
         try:
             smoke_receipt = json.loads(smoke_path.read_text())

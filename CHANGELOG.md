@@ -3,6 +3,28 @@
 All notable changes to pstack-codex are documented here. Release versions and
 notes are calculated from Conventional Commits and verified by semantic-release.
 
+## 1.1.0 (2026-10-07)
+
+### Features
+
+- Classify and sync the portable pstack 0.14.5 to 0.15.5 workflow changes.
+- Add eight skills, including selected maintainer, team, correction, benchmark,
+  help, and principle workflows from ScriptedAlchemy's Codex fork.
+- Add a pinned source inventory and read-only upstream comparison command.
+- Strengthen revision-bound verification, fair measurements, and stack shipping.
+
+### Bug Fixes
+
+- Preserve Codex-native setup, parent inheritance, and all five agent roles.
+- Replace Cursor runtime assumptions with native scheduling and explicit isolation.
+- Keep decision logs append-only and remove obsolete How critique resources.
+- Preserve untracked worktree data and avoid private session scans during cleanup.
+
+### Validation
+
+- Add executable plan, decision-log, and worktree-audit regression coverage.
+- Run helper typechecking and new behavior tests in pull-request CI.
+
 ## 1.0.0 (2026-08-31)
 
 ### Features

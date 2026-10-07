@@ -10,10 +10,13 @@ ROOT = Path(__file__).resolve().parents[3]
 
 def changed_paths(checkout, base, head):
     result = subprocess.run(
-        ["git", "-C", str(checkout), "diff", "--name-status", base, head, "--", "pstack"],
+        ["git", "-C", str(checkout), "diff", "--name-status", "--no-renames", "-z", base, head, "--", "pstack"],
         check=True, capture_output=True, text=True,
     )
-    return dict(line.split("\t", 1)[::-1] for line in result.stdout.splitlines())
+    # Stable one-path records, including tabs/newlines in filenames. A rename
+    # is represented as a deletion and an addition for the classified inventory.
+    fields = result.stdout.split("\0")
+    return dict(zip(fields[1::2], fields[0:-1:2]))
 
 
 def main():

@@ -1,3 +1,6 @@
+import json
+import shutil
+import tempfile
 from pathlib import Path
 import sys
 import tomllib
@@ -42,6 +45,29 @@ class ValidatePortTest(unittest.TestCase):
         )
         self.assertEqual(9, len(EXPECTED_UPSTREAM_RESOURCES))
         self.assertEqual([], validate_port(plugin_root, repo_root))
+
+    def test_historical_roster_is_preserved_and_current_failure_is_rejected(self):
+        source_plugin = Path(__file__).resolve().parents[1]
+        source_repo = source_plugin.parents[1]
+        with tempfile.TemporaryDirectory(prefix="pstack historical smoke ") as directory:
+            repo = Path(directory)
+            plugin = repo / "plugins/pstack-codex"
+            shutil.copytree(source_plugin, plugin,
+                            ignore=shutil.ignore_patterns("node_modules", "__pycache__"))
+            shutil.copytree(source_repo / ".codex", repo / ".codex")
+            historical = plugin / "validation/2026-08-31-agent-smoke.json"
+            receipt = json.loads(historical.read_text())
+            receipt["agents"] = [{"agent": "retired-role", "success": True}]
+            receipt["passed"] = True
+            historical.write_text(json.dumps(receipt))
+            historical_bytes = historical.read_bytes()
+            self.assertEqual([], validate_port(plugin, repo))
+            self.assertEqual(historical_bytes, historical.read_bytes())
+            current = plugin / "validation/2026-10-07-agent-smoke.json"
+            receipt = json.loads(current.read_text())
+            receipt["agents"][0]["success"] = False
+            current.write_text(json.dumps(receipt))
+            self.assertIn("agent smoke did not pass all agents", validate_port(plugin, repo))
 
     def test_copyable_agents_are_self_contained(self) -> None:
         repo_root = Path(__file__).resolve().parents[3]

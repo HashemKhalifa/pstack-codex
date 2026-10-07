@@ -6,7 +6,7 @@ Native CLI: `codex-cli 0.159.3`.
 | Gate | Outcome |
 | --- | --- |
 | Structural discovery | PASS, 53 skills and five agents |
-| Python regression suite | PASS, 13 tests |
+| Python regression suite | PASS, 15 tests |
 | Bundled orch/watch-pr suite | PASS, 52 tests |
 | Strict helper typecheck | PASS |
 | Published plan, log, worktree behavior | PASS, 11 Node tests |
@@ -22,3 +22,7 @@ Live probes ran from the exact trusted checkout in fresh persistent native paren
 The smoke receipt records the runtime target SHA. Later changes only tighten the perf test fixture and attach validation evidence; they do not change the tested runtime instructions or agent definitions. The CI run on the final PR head is the final structural/helper gate.
 
 Git test fixtures used isolated Git configuration to avoid the user's global commit hooks. The worktree regression test covers canonical paths with spaces, cached-ref preservation, no fetch, and preservation of untracked files. Automation scheduling, live forge mutations, bridge/Benny installation, and cap writes were not exercised or claimed.
+
+## GitHub review closure
+
+The two review findings on PR #3 were reproduced with failing tests before the fixes. Upstream comparisons now use NUL-delimited, rename-disabled records so a rename yields separate delete and add paths, including filenames with tabs and newlines. Validation checks only the current required smoke receipt against the current agent roster; historical receipts remain present and immutable. The regression test preserves a historical retired roster and still rejects failure in the current receipt. All 15 Python tests and the 104-path pinned inventory check pass. Native agent definitions and runtime workflows were unchanged by these review fixes.

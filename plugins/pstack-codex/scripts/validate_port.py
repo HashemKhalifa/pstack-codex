@@ -72,10 +72,12 @@ EXPECTED_AGENTS = {
     "pstack_minimalist",
     "pstack_skeptic",
 }
+CURRENT_AGENT_SMOKE = "validation/2026-10-07-agent-smoke.json"
+
 EXPECTED_EVIDENCE = {
     "validation/2026-08-31-agent-smoke.json",
     "validation/2026-08-31-pstack-script-tests.md",
-    "validation/2026-10-07-agent-smoke.json",
+    CURRENT_AGENT_SMOKE,
     "validation/2026-10-07-sync-validation.md",
 }
 EXPECTED_UPSTREAM_RESOURCES = {
@@ -189,7 +191,10 @@ def validate_port(plugin_root: Path, repo_root: Path) -> list[str]:
     if missing_evidence:
         errors.append(f"missing validation evidence: {missing_evidence}")
 
-    for smoke_path in sorted((plugin_root / "validation").glob("*agent-smoke.json")):
+    # Historical evidence is immutable and may describe a retired roster.
+    # Only the current required receipt is checked against EXPECTED_AGENTS.
+    smoke_path = plugin_root / CURRENT_AGENT_SMOKE
+    if smoke_path.is_file():
         try:
             smoke_receipt = json.loads(smoke_path.read_text())
         except (OSError, json.JSONDecodeError) as error:

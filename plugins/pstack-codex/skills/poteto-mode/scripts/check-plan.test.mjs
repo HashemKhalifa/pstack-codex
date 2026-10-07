@@ -24,7 +24,7 @@ function populatedPlan() {
     ['PR id, or None.', 'None.'], ['pr-id', '1'],
     ['base-branch', 'main'], ['head-branch', 'search-accessibility'],
     ['head SHA', 'a'.repeat(40)], ['n', '1'],
-    ['path', 'src/search.ts'], ['glob', 'src/search*'],
+    ['file path', 'src/search.ts'], ['glob', 'src/search*'],
     ['slug', 'search-complete'], ['media path', '/tmp/search-evidence'],
     ['command', 'npm test -- search'], ['value', '20 milliseconds'],
     ['The command or procedure, run at trunk and at the head, interleaved. Both sides must produce the metric.', 'node benchmark.mjs --interleaved'],
@@ -125,3 +125,21 @@ for (const [name, content] of [
     assert.equal(result.status, 0, result.stderr);
   });
 }
+
+for (const content of ['<svg><path></path></svg>', '`<path>` names an SVG element.']) {
+  test(`a populated plan accepts SVG markup ${content}`, () => {
+    const plan = populatedPlan().replace('# Search accessibility plan',
+      '# Search accessibility plan\n\n' + content);
+    assert.ok(plan.includes(content));
+    const result = check(plan);
+    assert.equal(result.status, 0, result.stderr);
+  });
+}
+
+test('an unfilled scaffold file path is rejected', () => {
+  const plan = populatedPlan();
+  assert.ok(plan.includes('Edit `src/search.ts`'));
+  const result = check(plan.replace('Edit `src/search.ts`', 'Edit `<file path>`'));
+  assert.equal(result.status, 1);
+  assert.match(result.stderr, /unfilled placeholder/u);
+});

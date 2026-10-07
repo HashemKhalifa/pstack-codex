@@ -84,9 +84,9 @@ Each native live lane receives an explicitly prepared isolated worktree at the e
 
 **Files.**
 
-- [ ] Edit `<path>`.
-- [ ] Create `<path>`.
-- [ ] Delete `<path>`.
+- [ ] Edit `<file path>`.
+- [ ] Create `<file path>`.
+- [ ] Delete `<file path>`.
 
 **Build.**
 

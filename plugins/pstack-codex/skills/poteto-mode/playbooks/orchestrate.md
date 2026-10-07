@@ -86,7 +86,7 @@ A dependency is a context relay, not just ordering. Undeclared upstream context 
 
 #### Verification
 
-Scale verification to the unit. When VERIFY is a single cheap command, the worker runs it and reports the output, and the coordinator spot-checks receipts. A dedicated verifier agent (on a different model family than the worker) is for units whose verification is expensive, judgment-laden, or high-blast-radius. A verifier agent whose entire product would be rerunning one command is ceremony, not verification.
+Scale verification to the unit. When VERIFY is a single cheap command, the worker runs it and reports the output, and the coordinator spot-checks receipts. An independent read-only verifier agent (with a different model family only when live configuration supports it) is for units whose verification is expensive, judgment-laden, or high-blast-radius. A verifier agent whose entire product would be rerunning one command is ceremony, not verification.
 
 Write ledger rows with `orch ledger record`. Check the current PR and head SHA with `orch ledger check`. `ledger.tsv`, one row per verdict, keyed by PR number plus head SHA: `live-ui-verified | unit-test-verified | type-check-only | verifier-blocked | verifier-failed`. CI green is an input to a verdict, not a verdict. Behavioral work needs better than `type-check-only`. `verifier-blocked` is not a pass. Respawn when the environment heals. `verifier-failed` gets a fix unit, not a re-verify. A worker may self-report. A verifier overrides it on the same key. A new head SHA voids the row, so re-verify after restack. The ledger answers "was this verified", not memory and not the transcript.
 
@@ -94,13 +94,13 @@ A unit is not done until its output is externalized the moment it lands, never b
 
 #### Liveness and failure
 
-- Never resume an agent to check on it. A resume restarts an idle agent. Probe read-only: the ledger, `units.tsv`, `gh`, pushed branches, the native agent's status in the Cursor dashboard. Transcript mtime is not liveness.
+- Never resume an agent just to check on it; a resume can restart an idle agent. Probe read-only through the available native collaboration-agent status and wait mechanisms, using the recorded agent IDs. Use `list_agents` or `wait_agent` only when those APIs are exposed, or the host's equivalent native status operation. Correlate state with the ledger, `units.tsv`, checks, pushed branches, and output receipts. If native state is unavailable, mark it unknown and use receipts plus elapsed runtime to investigate; silence alone does not prove death. Cursor dashboards and transcript mtime do not establish native-agent liveness.
 - A silent death gets a synthetic postmortem row in the inbox (unit, failure mode, last evidence, options). Replan on evidence as it arrives. Never wait for full quiescence.
 - Retry by mode: cap-hit or oom, respawn with smaller scope. Network-drop, retry as-is. Tool-error, retry on a different model. Unknown, retry once. Two retries, then abandon the unit and replan around it.
 - A zombie that returns hours late reconciles against the current frontier and ledger before anything is accepted. Salvage unique findings through a fresh unit, never a blind merge.
 - When continued spawning would produce garbage tree-wide (bad upstream output, broken acceptance, dead infra), write a stop line at the top of the standing orders, let in-flight work finish, fix the cause, clear it.
 - Bound your own infra retries the same way you bound a child's. After a few consecutive tool aborts, stop retrying. Write a terminal handoff to durable state (what is done, where it lives, the exact command to resume) and end the run.
-- After a Cursor restart: local agents are dead, cloud work is not. Re-read the standing orders and `units.tsv`, recompute the frontier, reattach cloud work by PR and branch rather than agent id, respawn one sub-coordinator per track from its stored brief plus current state, drain, resume. The dead session's store lock clears itself on the next write. `orch` replaces a lock whose holder pid is gone.
+- After a Codex CLI or desktop-app restart, re-read standing orders and `units.tsv` and recompute the frontier. Query the current host's native status mechanism before trusting stored agent IDs; do not assume any child survived or died. Reconcile durable work by exact branch SHA, PR state, and receipts. If an old agent is unreachable, establish exclusive write ownership before replacing it from the stored brief and current state. Drain the new owners before closing the operation. `orch` replaces a store lock only when its holder PID is gone.
 
 #### Escalation
 

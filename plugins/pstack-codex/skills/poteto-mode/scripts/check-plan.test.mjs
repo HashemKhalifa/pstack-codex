@@ -111,3 +111,17 @@ test('an unfilled perf probe command is rejected', () => {
   assert.equal(result.status, 1);
   assert.match(result.stderr, /unfilled placeholder/u);
 });
+
+for (const [name, content] of [
+  ['inline type generics', '`Promise<Result>` and `Map<string, Array<Result>>` are concrete types.'],
+  ['HTML markup', '<span>Concrete output</span>'],
+  ['Markdown autolinks', '<https://example.test/evidence>'],
+]) {
+  test(`a populated plan accepts ${name}`, () => {
+    const plan = populatedPlan().replace('# Search accessibility plan',
+      '# Search accessibility plan\n\n' + content);
+    assert.ok(plan.includes(content));
+    const result = check(plan);
+    assert.equal(result.status, 0, result.stderr);
+  });
+}

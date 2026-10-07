@@ -9,7 +9,7 @@ Native CLI: `codex-cli 0.159.3`.
 | Python regression suite | PASS, 15 tests |
 | Bundled orch/watch-pr suite | PASS, 52 tests |
 | Strict helper typecheck | PASS |
-| Published plan, log, worktree behavior | PASS, 11 Node tests |
+| Published plan, log, worktree behavior | PASS, 14 Node tests |
 | Bounded upstream inventory | PASS, all 104 changed source paths at 0.15.5 |
 | Five-agent live smoke | PASS, exact child/parent sentinels for every native role |
 | Release dry-run | PASS, calculates and verifies 1.1.0 on the proposed branch |
@@ -26,3 +26,5 @@ Git test fixtures used isolated Git configuration to avoid the user's global com
 ## GitHub review closure
 
 The two review findings on PR #3 were reproduced with failing tests before the fixes. Upstream comparisons now use NUL-delimited, rename-disabled records so a rename yields separate delete and add paths, including filenames with tabs and newlines. Validation checks only the current required smoke receipt against the current agent roster; historical receipts remain present and immutable. The regression test preserves a historical retired roster and still rejects failure in the current receipt. All 15 Python tests and the 104-path pinned inventory check pass. Native agent definitions and runtime workflows were unchanged by these review fixes.
+
+The follow-up GitHub review found false positives for inline generic types, HTML markup, and Markdown autolinks. Three failing regression cases reproduced them. Placeholder detection now uses the shipped scaffold vocabulary while still rejecting known unfilled model and command fields. All 14 Node behavior tests pass. Live host coverage remains CLI-only; Codex desktop app discovery and agent spawning have not yet been exercised.

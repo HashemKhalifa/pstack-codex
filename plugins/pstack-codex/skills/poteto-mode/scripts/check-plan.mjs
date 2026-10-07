@@ -26,6 +26,14 @@ const HOW_TO_READ_MARKERS = [
 	RULE,
 ];
 const PERF_ITEMS = ["Metric.", "Probe.", "Baseline.", "Rule."];
+// Recognize the shipped scaffold vocabulary, not arbitrary angle-bracket syntax.
+// Keep inline placeholders such as `<command>` detectable without rejecting
+// concrete types, HTML markup, or Markdown autolinks.
+const PLACEHOLDER_PATTERN = /<([^<>\r\n]+)>/g;
+const knownPlaceholders = new Set(
+    [...fs.readFileSync(new URL("../playbooks/multi-phase-plan.md", import.meta.url), "utf8")
+        .matchAll(PLACEHOLDER_PATTERN)].map((match) => match[1]),
+);
 const BOX = /^\s*- \[[ x]\] (.*)$/;
 
 const file = process.argv[2];
@@ -51,7 +59,9 @@ for (let i = start; i < raw.length; i++) {
 	if (/^```/.test(text)) fence = !fence;
 	lines.push({ n, text, code: fence });
 	if (fence) continue;
-	if (/<[A-Za-z][^<>]*>/.test(text)) fail(n, "unfilled placeholder");
+	if ([...text.matchAll(PLACEHOLDER_PATTERN)].some((match) => knownPlaceholders.has(match[1]))) {
+		fail(n, "unfilled placeholder");
+	}
 	const prose = text
 		.replace(/`[^`]*`/g, "`")
 		.replace(/!\[[^\]]*\]\([^)]*\)/g, "")

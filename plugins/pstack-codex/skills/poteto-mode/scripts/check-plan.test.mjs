@@ -27,6 +27,7 @@ function populatedPlan() {
     ['path', 'src/search.ts'], ['glob', 'src/search*'],
     ['slug', 'search-complete'], ['media path', '/tmp/search-evidence'],
     ['command', 'npm test -- search'], ['value', '20 milliseconds'],
+    ['The command or procedure, run at trunk and at the head, interleaved. Both sides must produce the metric.', 'node benchmark.mjs --interleaved'],
     ['predicate', 'the results and accessible status agree'],
     ['Scenario.', 'Submit a keyboard-only search and inspect the accessible status.'],
     ['the same load-bearing scenario', 'a keyboard-only search'],
@@ -104,7 +105,9 @@ test('a plan without the 30-minute audit cadence is rejected', () => {
 });
 
 test('an unfilled perf probe command is rejected', () => {
-  const result = check(populatedPlan().replace('npm test -- search', '<command>'));
+  const plan = populatedPlan();
+  assert.match(plan, /Probe\. node benchmark\.mjs --interleaved/u);
+  const result = check(plan.replace('node benchmark.mjs --interleaved', '<command>'));
   assert.equal(result.status, 1);
   assert.match(result.stderr, /unfilled placeholder/u);
 });

@@ -24,6 +24,12 @@ codex plugin add pstack-codex@pstack-codex
 
 Start a new Codex task after installation so the skill catalog reloads.
 
+The same manifest-compatible plugin package is intended for both Codex CLI and
+Codex Desktop. The commands above are CLI commands; after installing in the
+desktop app, start a fresh task and confirm the skill catalog reloads. Automated
+agent-smoke evidence currently covers CLI discovery only, so desktop-app use
+should be checked in the app before relying on custom agents.
+
 ## Use the custom agents
 
 Codex custom agents are project-scoped and project `.codex/` layers load only

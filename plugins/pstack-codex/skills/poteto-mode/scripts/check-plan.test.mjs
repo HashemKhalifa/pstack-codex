@@ -14,6 +14,7 @@ assert.ok(skeleton, 'the shipped playbook contains its runnable plan skeleton');
 function populatedPlan() {
   const fields = new Map([
     ['Program', 'Search accessibility'],
+    ['swarm workers model', 'inherit-parent'],
     ['Task as a verb phrase', 'Expose search completion to screen readers'],
     ['plugin-root', '/opt/pstack'],
     ['execution playbook', 'autopilot-full'],
@@ -84,6 +85,7 @@ test('an interaction review gate without operator evidence is rejected', () => {
 for (const configured of ['live-verified-model', 'inherit-parent']) {
   test(`configured worker choice ${configured} is accepted`, () => {
     const plan = populatedPlan().replaceAll('`inherit-parent`', `\`${configured}\``);
+    assert.match(plan, new RegExp('Ten lanes on `' + configured + '` at the PR head'));
     const result = check(plan);
     assert.equal(result.status, 0, result.stderr);
   });
@@ -99,4 +101,10 @@ test('a plan without the 30-minute audit cadence is rejected', () => {
   const result = check(populatedPlan().replace('30-minute audit tick', 'audit tick when remembered'));
   assert.equal(result.status, 1);
   assert.match(result.stderr, /Program checklist lacks .*30/u);
+});
+
+test('an unfilled perf probe command is rejected', () => {
+  const result = check(populatedPlan().replace('npm test -- search', '<command>'));
+  assert.equal(result.status, 1);
+  assert.match(result.stderr, /unfilled placeholder/u);
 });

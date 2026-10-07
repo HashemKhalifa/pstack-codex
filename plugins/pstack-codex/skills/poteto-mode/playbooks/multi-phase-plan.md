@@ -60,20 +60,20 @@ Tests alone are not sufficient verification. A PR is verified only when its unit
 - [ ] Open the PR with the authorized readiness state using `origin pr create --status open --base <base-branch>` or `gh pr create --base <base-branch>` according to the resolved forge. A stack child targets its parent branch.
 - [ ] Run the repo's lint and typecheck once before the PR-facing push. Push with hooks on.
 - [ ] Run `/deslop` before each commit and `/no-comments` before review.
-- [ ] Triage every Bugbot and security-reviewer comment per `../references/bugbot-triage.md`.
+- [ ] Triage every Bugbot and security-reviewer comment per `<plugin-root>/skills/poteto-mode/references/bugbot-triage.md`.
 - [ ] Rebase onto current trunk before the code-ready report and babysit. Keep that merge base in fix rounds. Rebase again only at merge prep, on a `git merge-tree` conflict with trunk, or on a CI failure that comes from a change on trunk.
 
 ### Verdict and merge, for every PR
 
-- [ ] At the code-ready head SHA and at each later push that changes the patch, run the swarm per `pstack/skills/swarm/SKILL.md`. One gates lane. The ten live lanes from the PR's **Verify, live** block. The perf lane from its **Verify, perf** block. Two or more audit lanes, each with its own focus, that read the diff and the receipts and distrust the PR body. The root audits the receipts in the merge-ready report before the verdict.
-- [ ] Clean only when every lane is `PASS`. Findings go back to the owner, including a defect that a lane filed as a note. A new head gets a fresh swarm and a fresh verdict, except for results that stay valid under the patch-id rule in `playbooks/shipping.md`.
-- [ ] <The merge or append rule from the execution playbook, with the patch-id rule from `playbooks/shipping.md`.>
+- [ ] At the code-ready head SHA and at each later push that changes the patch, run the swarm per `<plugin-root>/skills/swarm/SKILL.md`. One gates lane. The ten live lanes from the PR's **Verify, live** block. The perf lane from its **Verify, perf** block. Two or more audit lanes, each with its own focus, that read the diff and the receipts and distrust the PR body. The root audits the receipts in the merge-ready report before the verdict.
+- [ ] Clean only when every lane is `PASS`. Findings go back to the owner, including a defect that a lane filed as a note. A new head gets a fresh swarm and a fresh verdict, except for results that stay valid under the patch-id rule in `<plugin-root>/skills/poteto-mode/playbooks/shipping.md`.
+- [ ] <The merge or append rule from the execution playbook, with the patch-id rule from `<plugin-root>/skills/poteto-mode/playbooks/shipping.md`.>
 
 ### Boot recipe, for every live lane
 
-Each live lane runs on its own cloud VM at the PR head. Drive through `control-ui` or `control-cli` from `the available host skill catalog`.
+Each native live lane receives an explicitly prepared isolated worktree at the exact PR head and separate runtime state, ports, and output paths. Do not assume automatic isolation. Dispatch lanes in waves within the native concurrency ceiling. Drive through the available control skill. Every lane follows `<plugin-root>/CODEX_PORT.md`.
 
-- [ ] `git fetch origin <head-branch> && git checkout <head SHA>`.
+- [ ] The owner prepares a separate clean worktree at `<head SHA>`, verifies its HEAD, and records its absolute path. Each lane runs only in its assigned worktree; no checkout or reset in a shared parent tree.
 - [ ] <Start the backend and the surface. Wait for ready.>
 - [ ] <Deliver input only through the control skill's commands. Name the read-only diagnostics.>
 - [ ] Save every screenshot to `/tmp/swarm-<pr-id>/worker-<n>/<slug>.png` and return the paths with the report.
@@ -152,7 +152,7 @@ Each live lane runs on its own cloud VM at the PR head. Drive through `control-u
 
 ## Appendix D. Links and reading list
 
-<Docs to read before editing. Which PRs get `pstack/skills/how/SKILL.md` and `pstack/skills/interrogate/SKILL.md`. The trail per `pstack/skills/show-me-your-work/SKILL.md`.>
+<Docs to read before editing. Which PRs get `<plugin-root>/skills/how/SKILL.md` and `<plugin-root>/skills/interrogate/SKILL.md`. The trail per `<plugin-root>/skills/show-me-your-work/SKILL.md`.>
 ````
 
 **Reply:** the plan path, the PR ids with their dependencies and the review-gated set, what the prototypes proved and what stays unproven, and the check script's output.

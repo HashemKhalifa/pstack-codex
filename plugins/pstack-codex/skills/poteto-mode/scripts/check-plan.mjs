@@ -51,6 +51,7 @@ for (let i = start; i < raw.length; i++) {
 	if (/^```/.test(text)) fence = !fence;
 	lines.push({ n, text, code: fence });
 	if (fence) continue;
+	if (/<[A-Za-z][^<>]*>/.test(text)) fail(n, "unfilled placeholder");
 	const prose = text
 		.replace(/`[^`]*`/g, "`")
 		.replace(/!\[[^\]]*\]\([^)]*\)/g, "")
